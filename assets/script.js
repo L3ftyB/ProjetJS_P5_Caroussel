@@ -17,58 +17,58 @@ const slides = [
 	}
 ]
 
-
-/*
-img__slider = document.getElementsByClassName('img__slider')
-
-etape = 0
-
-nbr__img = img__slider.length
-*/
 let position = 0
 
-function fonction1() {
-	debugger
-	console.log("message")
+let imageSlide = document.querySelector('.img_slide')
+let texte = document.getElementById('text-slide')
+
+let point = document.getElementsByClassName('dot')
+let nbrPoints = point.length
+
+function enleverPoint(){
+	for( let i = 0 ; i < nbrPoints; i++){
+		point[i].classList.remove('dot_selected')
+	}
+}
+
+function imgSuivante() {
 	position = position + 1
-	let groupSlide = slides[ position ]
-	imageTag.src="./assets/images/slideshow/"+groupSlide.image
-	/*
-	for( i = 0; i < nbr__img; i++) {
-		img__slider[i].classList.remove('active')
+
+	if( position > 3){
+		position = 0
 	}
 
-	if(etape >= nbr__img) {
-		etape = 0;
-	}
-	*/
+	enleverPoint()
+	point[position].classList.add('dot_selected')
+	
+	let imageWithTag = slides[position]
+	imageSlide.src = "./assets/images/slideshow/" + imageWithTag.image
+	texte.innerHTML = imageWithTag.tagLine
 
+}
+
+function imgPrecedent() {
+	position = position - 1
+
+	if( position < 0){
+		position = 3
+	}
+
+	enleverPoint()
+	point[position].classList.add('dot_selected')
+
+	let imageWithTag = slides[position]
+	imageSlide.src = "./assets/images/slideshow/" + imageWithTag.image
+	texte.innerHTML = imageWithTag.tagLine
 }
 
 let suivant = document.querySelector('.arrow.arrow_right')
 let precedent = document.querySelector('.arrow.arrow_left')
 
-let imageTag = document.querySelector('.img__slider')
-
-console.log(imageTag)
-
 suivant.addEventListener('click', function(){
-	console.log("message2")
+	imgSuivante()
 })
 
-//precedent.addEventListener('click', fonction2)
-
-
-
-
-
-
-
-/*
-function fonction2() {
-	for( i = 0; i > nbr__img; i--) {
-		img__slider[i].classList.remove('active')
-	}
-}
-
-*/
+precedent.addEventListener('click', function(){
+	imgPrecedent()
+})
